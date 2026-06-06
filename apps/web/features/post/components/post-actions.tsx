@@ -54,14 +54,16 @@ export function PostActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>
-            <Repeat />
-            Repost
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <FileText />
-            Quote
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <Repeat />
+              Repost
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <FileText />
+              Quote
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
       <Button variant="ghost" size="sm">

@@ -10,13 +10,13 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   return (
-    <article className="flex gap-3 border-b p-4">
+    <article className="flex gap-2 border-b p-4">
       <PostAvatar
         src={post.author.avatarSrc}
         alt={post.author.avatarAlt}
         fallback={post.author.avatarFallback}
       />
-      <div className="min-w-0 flex-1 space-y-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         <PostHeader
           name={post.author.name}
           username={post.author.username}
