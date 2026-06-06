@@ -1,14 +1,8 @@
-export interface PostAuthor {
-  name: string
-  username: string
-  avatarSrc: string
-  avatarAlt: string
-  avatarFallback: string
-}
+import type { User } from "../user/types"
 
 export interface Post {
   id: string
-  author: PostAuthor
+  author: User
   content: string
   timestamp: string
   replyCount: number
