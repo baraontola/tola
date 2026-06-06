@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@workspace/ui/components/button"
+import { formatCompactNumber } from "@/lib/number"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -28,7 +29,7 @@ interface PostActionsProps {
   replyCount: number
   repostCount: number
   likeCount: number
-  viewCount: string
+  viewCount: number
   authorUsername: string
 }
 
@@ -43,13 +44,13 @@ export function PostActions({
     <div className="flex items-center justify-between">
       <Button variant="ghost" size="sm">
         <MessageCircle />
-        {replyCount}
+        {formatCompactNumber(replyCount)}
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm">
             <Repeat />
-            {repostCount}
+            {formatCompactNumber(repostCount)}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -65,11 +66,11 @@ export function PostActions({
       </DropdownMenu>
       <Button variant="ghost" size="sm">
         <Heart />
-        {likeCount}
+        {formatCompactNumber(likeCount)}
       </Button>
       <Button variant="ghost" size="sm">
         <ChartNoAxesColumnIncreasing />
-        {viewCount}
+        {formatCompactNumber(viewCount)}
       </Button>
       <Button variant="ghost" size="icon-sm" aria-label="Bookmark">
         <Bookmark />

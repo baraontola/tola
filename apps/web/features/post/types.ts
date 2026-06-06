@@ -14,5 +14,5 @@ export interface Post {
   replyCount: number
   repostCount: number
   likeCount: number
-  viewCount: string
+  viewCount: number
 }

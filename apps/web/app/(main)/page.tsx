@@ -23,7 +23,7 @@ const posts: Post[] = [
     replyCount: 3,
     repostCount: 5,
     likeCount: 12,
-    viewCount: "2.1K",
+    viewCount: 2100,
   },
   {
     id: "2",
@@ -40,7 +40,7 @@ const posts: Post[] = [
     replyCount: 24,
     repostCount: 8,
     likeCount: 47,
-    viewCount: "8.3K",
+    viewCount: 8300,
   },
   {
     id: "3",
@@ -57,7 +57,7 @@ const posts: Post[] = [
     replyCount: 8,
     repostCount: 12,
     likeCount: 89,
-    viewCount: "4.5K",
+    viewCount: 4500,
   },
   {
     id: "4",
@@ -71,10 +71,10 @@ const posts: Post[] = [
     content:
       "The best career advice I ever got:\n\nWrite more code that ships. Less code that's perfect.\n\nYou learn more from a deployed feature with real users than from a pristine codebase that never sees the light of day.\n\nAnother thing: don't over-engineer for hypothetical scenarios. Solve the problem in front of you, not the one you're imagining.",
     timestamp: "8h",
-    replyCount: 45,
-    repostCount: 120,
-    likeCount: 534,
-    viewCount: "12.4K",
+    replyCount: 4500,
+    repostCount: 120000,
+    likeCount: 534000,
+    viewCount: 12400000,
   },
   {
     id: "5",
@@ -88,10 +88,10 @@ const posts: Post[] = [
     content:
       "Three things I've unlearned about product management:\n\n1. More features ≠ more value. Adding options doesn't make a product better, it makes it harder to use.\n\n2. Your users won't tell you what they need. Watch what they do, not what they say.\n\n3. Speed of iteration beats size of iteration. Small frequent releases > big bang launches.\n\nThe best products aren't the most feature-rich. They're the most focused on doing one thing exceptionally well.",
     timestamp: "12h",
-    replyCount: 67,
-    repostCount: 89,
-    likeCount: 1234,
-    viewCount: "28.1K",
+    replyCount: 67000,
+    repostCount: 89100,
+    likeCount: 1234567,
+    viewCount: 28100000,
   },
 ]
 
