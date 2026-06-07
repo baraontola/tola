@@ -248,14 +248,14 @@ export function PostActions({
               <UserMinus />
               Mute @{authorUsername}
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem variant="destructive">
               <Ban />
               Block @{authorUsername}
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem variant="destructive">
               <Flag />
               Report post
             </DropdownMenuItem>
