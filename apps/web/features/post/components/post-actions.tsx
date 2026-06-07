@@ -3,6 +3,11 @@
 import { useState } from "react"
 
 import { Button } from "@workspace/ui/components/button"
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@workspace/ui/components/tooltip"
 import { formatCompactNumber } from "@/lib/number"
 import {
   DropdownMenu,
@@ -48,34 +53,45 @@ export function PostActions({
 
   return (
     <div className="flex items-center justify-between">
-      <Button
-        variant="ghost"
-        size={replyCount > 0 ? "sm" : "icon-sm"}
-        aria-label="Reply"
-      >
-        <MessageCircle />
-        {replyCount > 0 && (
-          <span className="tabular-nums">
-            {formatCompactNumber(replyCount)}
-          </span>
-        )}
-      </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <Tooltip>
+        <TooltipTrigger asChild>
           <Button
-            variant={isReposted ? "secondary" : "ghost"}
-            size={repostCount + (isReposted ? 1 : 0) > 0 ? "sm" : "icon-sm"}
-            aria-label="Repost"
-            aria-pressed={isReposted}
+            variant="ghost"
+            size={replyCount > 0 ? "sm" : "icon-sm"}
+            aria-label="Reply"
           >
-            <Repeat />
-            {repostCount + (isReposted ? 1 : 0) > 0 && (
+            <MessageCircle />
+            {replyCount > 0 && (
               <span className="tabular-nums">
-                {formatCompactNumber(repostCount + (isReposted ? 1 : 0))}
+                {formatCompactNumber(replyCount)}
               </span>
             )}
           </Button>
-        </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Reply</TooltipContent>
+      </Tooltip>
+
+      <DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant={isReposted ? "secondary" : "ghost"}
+                size={repostCount + (isReposted ? 1 : 0) > 0 ? "sm" : "icon-sm"}
+                aria-label="Repost"
+                aria-pressed={isReposted}
+              >
+                <Repeat />
+                {repostCount + (isReposted ? 1 : 0) > 0 && (
+                  <span className="tabular-nums">
+                    {formatCompactNumber(repostCount + (isReposted ? 1 : 0))}
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Repost</TooltipContent>
+        </Tooltip>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setIsReposted(!isReposted)}>
@@ -89,45 +105,71 @@ export function PostActions({
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button
-        variant={isLiked ? "secondary" : "ghost"}
-        size={likeCount + (isLiked ? 1 : 0) > 0 ? "sm" : "icon-sm"}
-        onClick={() => setIsLiked(!isLiked)}
-        aria-label="Like"
-        aria-pressed={isLiked}
-      >
-        <Heart className={isLiked ? "fill-current" : ""} />
-        {likeCount + (isLiked ? 1 : 0) > 0 && (
-          <span className="tabular-nums">
-            {formatCompactNumber(likeCount + (isLiked ? 1 : 0))}
-          </span>
-        )}
-      </Button>
-      <Button
-        variant="ghost"
-        size={viewCount > 0 ? "sm" : "icon-sm"}
-        aria-label="Views"
-      >
-        <ChartNoAxesColumnIncreasing />
-        {viewCount > 0 && (
-          <span className="tabular-nums">{formatCompactNumber(viewCount)}</span>
-        )}
-      </Button>
-      <Button
-        variant={isSaved ? "secondary" : "ghost"}
-        size="icon-sm"
-        aria-label="Bookmark"
-        onClick={() => setIsSaved(!isSaved)}
-        aria-pressed={isSaved}
-      >
-        <Bookmark className={isSaved ? "fill-current" : ""} />
-      </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon-sm" aria-label="More">
-            <Ellipsis />
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={isLiked ? "secondary" : "ghost"}
+            size={likeCount + (isLiked ? 1 : 0) > 0 ? "sm" : "icon-sm"}
+            onClick={() => setIsLiked(!isLiked)}
+            aria-label="Like"
+            aria-pressed={isLiked}
+          >
+            <Heart className={isLiked ? "fill-current" : ""} />
+            {likeCount + (isLiked ? 1 : 0) > 0 && (
+              <span className="tabular-nums">
+                {formatCompactNumber(likeCount + (isLiked ? 1 : 0))}
+              </span>
+            )}
           </Button>
-        </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>{isLiked ? "Unlike" : "Like"}</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size={viewCount > 0 ? "sm" : "icon-sm"}
+            aria-label="Views"
+          >
+            <ChartNoAxesColumnIncreasing />
+            {viewCount > 0 && (
+              <span className="tabular-nums">
+                {formatCompactNumber(viewCount)}
+              </span>
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Views</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={isSaved ? "secondary" : "ghost"}
+            size="icon-sm"
+            aria-label="Bookmark"
+            onClick={() => setIsSaved(!isSaved)}
+            aria-pressed={isSaved}
+          >
+            <Bookmark className={isSaved ? "fill-current" : ""} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Bookmark</TooltipContent>
+      </Tooltip>
+
+      <DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon-sm" aria-label="More">
+                <Ellipsis />
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>More</TooltipContent>
+        </Tooltip>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem>
