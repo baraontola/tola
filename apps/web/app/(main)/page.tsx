@@ -108,6 +108,46 @@ const posts: Post[] = [
     likeCount: 1234567,
     viewCount: 28100000,
   },
+  {
+    id: "6",
+    author: {
+      name: "Tola Builder",
+      username: "tola_builder",
+      avatarSrc: "https://github.com/tolabuilder.png",
+      avatarAlt: "@tola_builder",
+      avatarFallback: "TB",
+      bio: "An empty post simulation tool to test 0 states and interaction behaviors.",
+      followingCount: 1,
+      followersCount: 1,
+    },
+    content:
+      "Testing the zero state of actions. This post should render clean circular buttons with zero layout shifting. Click them to see the transition from circular icons to oblong pills with numeric values!",
+    timestamp: "1m",
+    replyCount: 0,
+    repostCount: 0,
+    likeCount: 0,
+    viewCount: 0,
+  },
+  {
+    id: "7",
+    author: {
+      name: "Clara Oswald",
+      username: "impossible_girl",
+      avatarSrc: "https://github.com/clara.png",
+      avatarAlt: "@impossible_girl",
+      avatarFallback: "CO",
+      bio: "Traveling through space and time. Sometimes solving SQL and UI issues.",
+      followingCount: 120,
+      followersCount: 9400,
+    },
+    content:
+      "Mixed state test: 12 replies and 1500 views, but currently 0 reposts and 0 likes. Like and Repost this post to test dynamic shape shifting!",
+    timestamp: "15m",
+    replyCount: 12,
+    repostCount: 0,
+    likeCount: 0,
+    viewCount: 1500,
+  },
 ]
 
 export default function Page() {
