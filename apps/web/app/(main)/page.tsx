@@ -27,6 +27,7 @@ const posts: Post[] = [
     repostCount: 5,
     likeCount: 12,
     viewCount: 2100,
+    shareCount: 2,
   },
   {
     id: "2",
@@ -47,6 +48,7 @@ const posts: Post[] = [
     repostCount: 8,
     likeCount: 47,
     viewCount: 8300,
+    shareCount: 0,
   },
   {
     id: "3",
@@ -67,6 +69,7 @@ const posts: Post[] = [
     repostCount: 12,
     likeCount: 89,
     viewCount: 4500,
+    shareCount: 5,
   },
   {
     id: "4",
@@ -87,6 +90,7 @@ const posts: Post[] = [
     repostCount: 120000,
     likeCount: 534000,
     viewCount: 12400000,
+    shareCount: 94000,
   },
   {
     id: "5",
@@ -107,6 +111,7 @@ const posts: Post[] = [
     repostCount: 89100,
     likeCount: 1234567,
     viewCount: 28100000,
+    shareCount: 12000,
   },
   {
     id: "6",
@@ -127,6 +132,7 @@ const posts: Post[] = [
     repostCount: 0,
     likeCount: 0,
     viewCount: 0,
+    shareCount: 0,
   },
   {
     id: "7",
@@ -147,6 +153,7 @@ const posts: Post[] = [
     repostCount: 0,
     likeCount: 0,
     viewCount: 1500,
+    shareCount: 0,
   },
 ]
 

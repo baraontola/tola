@@ -9,6 +9,7 @@ import {
   TooltipContent,
 } from "@workspace/ui/components/tooltip"
 import { formatCompactNumber } from "@/lib/number"
+import { toast } from "sonner"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -23,6 +24,7 @@ import {
   Heart,
   ChartNoAxesColumnIncreasing,
   Bookmark,
+  BookmarkOff,
   Ellipsis,
   Copy,
   Share2,
@@ -30,6 +32,7 @@ import {
   Ban,
   Flag,
   FileText,
+  EyeOff,
 } from "lucide-react"
 
 interface PostActionsProps {
@@ -37,7 +40,9 @@ interface PostActionsProps {
   repostCount: number
   likeCount: number
   viewCount: number
+  shareCount: number
   authorUsername: string
+  postId: string
 }
 
 export function PostActions({
@@ -45,7 +50,9 @@ export function PostActions({
   repostCount,
   likeCount,
   viewCount,
+  shareCount,
   authorUsername,
+  postId,
 }: PostActionsProps) {
   const [isReposted, setIsReposted] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
@@ -144,20 +151,52 @@ export function PostActions({
         <TooltipContent>Views</TooltipContent>
       </Tooltip>
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={isSaved ? "secondary" : "ghost"}
-            size="icon-sm"
-            aria-label="Bookmark"
-            onClick={() => setIsSaved(!isSaved)}
-            aria-pressed={isSaved}
-          >
-            <Bookmark className={isSaved ? "fill-current" : ""} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Bookmark</TooltipContent>
-      </Tooltip>
+      <DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size={shareCount > 0 ? "sm" : "icon-sm"}
+                aria-label="Share"
+              >
+                <Share2 />
+                {shareCount > 0 && (
+                  <span className="tabular-nums">
+                    {formatCompactNumber(shareCount)}
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Share</TooltipContent>
+        </Tooltip>
+        <DropdownMenuContent align="end">
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <Share2 />
+              Share
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                const postUrl = `${window.location.origin}/${authorUsername}/status/${postId}`
+                navigator.clipboard
+                  .writeText(postUrl)
+                  .then(() => {
+                    toast.success("Link copied to clipboard")
+                  })
+                  .catch((err) => {
+                    toast.error("Failed to copy link")
+                    console.error("Copy failed: ", err)
+                  })
+              }}
+            >
+              <Copy />
+              Copy link
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <DropdownMenu>
         <Tooltip>
@@ -172,18 +211,40 @@ export function PostActions({
         </Tooltip>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Share2 />
-              Share
+            <DropdownMenuItem
+              onClick={() => {
+                setIsSaved(!isSaved)
+                toast.success(
+                  isSaved ? "Removed from Bookmarks" : "Saved to Bookmarks"
+                )
+              }}
+            >
+              {isSaved ? <BookmarkOff /> : <Bookmark />}
+              {isSaved ? "Unsave" : "Save"}
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Copy />
-              Copy link
+            <DropdownMenuItem
+              onClick={() => {
+                toast.success("Marked as not interested")
+              }}
+            >
+              <EyeOff />
+              Not interested
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                toast.success(`Muted @${authorUsername}`, {
+                  action: {
+                    label: "Undo",
+                    onClick: () => {
+                      toast.success(`Unmuted @${authorUsername}`)
+                    },
+                  },
+                })
+              }}
+            >
               <UserMinus />
               Mute @{authorUsername}
             </DropdownMenuItem>

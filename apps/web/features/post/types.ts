@@ -9,4 +9,5 @@ export interface Post {
   repostCount: number
   likeCount: number
   viewCount: number
+  shareCount: number
 }

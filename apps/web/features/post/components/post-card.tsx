@@ -38,7 +38,9 @@ export function PostCard({ post }: PostCardProps) {
           repostCount={post.repostCount}
           likeCount={post.likeCount}
           viewCount={post.viewCount}
+          shareCount={post.shareCount}
           authorUsername={post.author.username}
+          postId={post.id}
         />
       </div>
     </article>
