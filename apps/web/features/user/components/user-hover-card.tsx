@@ -25,7 +25,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
   const [isFollowing, setIsFollowing] = useState(false)
 
   return (
-    <HoverCard openDelay={10} closeDelay={100}>
+    <HoverCard>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent className="flex w-80 flex-col gap-2" align="start">
         <div className="flex items-start justify-between">

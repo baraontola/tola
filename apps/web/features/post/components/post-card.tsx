@@ -27,7 +27,11 @@ export function PostCard({ post }: PostCardProps) {
         </Link>
       </UserHoverCard>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <PostHeader author={post.author} timestamp={post.timestamp} />
+        <PostHeader
+          author={post.author}
+          timestamp={post.timestamp}
+          postId={post.id}
+        />
         <PostContent>{post.content}</PostContent>
         <PostActions
           replyCount={post.replyCount}

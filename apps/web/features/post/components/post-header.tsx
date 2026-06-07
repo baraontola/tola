@@ -1,13 +1,20 @@
 import type { User } from "../../user/types"
 import { UserHoverCard } from "../../user/components/user-hover-card"
 import Link from "next/link"
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@workspace/ui/components/tooltip"
+import { formatPostDate, formatAbsoluteDate } from "@/lib/date"
 
 interface PostHeaderProps {
   author: User
   timestamp: string
+  postId: string
 }
 
-export function PostHeader({ author, timestamp }: PostHeaderProps) {
+export function PostHeader({ author, timestamp, postId }: PostHeaderProps) {
   return (
     <div className="flex items-center gap-1 text-sm">
       <UserHoverCard user={author}>
@@ -29,7 +36,19 @@ export function PostHeader({ author, timestamp }: PostHeaderProps) {
         </Link>
       </UserHoverCard>
       <span className="text-muted-foreground">·</span>
-      <span className="text-muted-foreground">{timestamp}</span>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            href={`/${author.username}/status/${postId}`}
+            className="text-muted-foreground hover:underline"
+            prefetch={false}
+            suppressHydrationWarning
+          >
+            {formatPostDate(timestamp)}
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>{formatAbsoluteDate(timestamp)}</TooltipContent>
+      </Tooltip>
     </div>
   )
 }

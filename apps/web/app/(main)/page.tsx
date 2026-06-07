@@ -22,7 +22,7 @@ const posts: Post[] = [
     },
     content:
       "Just shipped the new dashboard — real-time analytics, customizable widgets, and a dark mode that actually looks good. Spent the last two weeks refactoring the query layer and it was worth every minute. Performance is up 40% on the main feed.",
-    timestamp: "2h",
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     replyCount: 3,
     repostCount: 5,
     likeCount: 12,
@@ -42,7 +42,7 @@ const posts: Post[] = [
     },
     content:
       "Hot take: type-safe SQL with Drizzle is significantly better than raw SQL strings in production.\n\nThe DX of autocomplete on your schema plus full TypeScript inference on queries catches so many edge cases before they reach staging.\n\nFight me.",
-    timestamp: "5h",
+    timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
     replyCount: 24,
     repostCount: 8,
     likeCount: 47,
@@ -62,7 +62,7 @@ const posts: Post[] = [
     },
     content:
       "Redesigned the onboarding flow this sprint. Cut the steps from 6 to 3 and conversion went up 34%.\n\nLesson learned: every extra input field is a prayer that your user really wants to be there. When in doubt, remove.",
-    timestamp: "1d",
+    timestamp: new Date(Date.now() - 25 * 60 * 60 * 1000).toISOString(),
     replyCount: 8,
     repostCount: 12,
     likeCount: 89,
@@ -82,7 +82,7 @@ const posts: Post[] = [
     },
     content:
       "The best career advice I ever got:\n\nWrite more code that ships. Less code that's perfect.\n\nYou learn more from a deployed feature with real users than from a pristine codebase that never sees the light of day.\n\nAnother thing: don't over-engineer for hypothetical scenarios. Solve the problem in front of you, not the one you're imagining.",
-    timestamp: "8h",
+    timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
     replyCount: 4500,
     repostCount: 120000,
     likeCount: 534000,
@@ -102,7 +102,7 @@ const posts: Post[] = [
     },
     content:
       "Three things I've unlearned about product management:\n\n1. More features ≠ more value. Adding options doesn't make a product better, it makes it harder to use.\n\n2. Your users won't tell you what they need. Watch what they do, not what they say.\n\n3. Speed of iteration beats size of iteration. Small frequent releases > big bang launches.\n\nThe best products aren't the most feature-rich. They're the most focused on doing one thing exceptionally well.",
-    timestamp: "12h",
+    timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
     replyCount: 67000,
     repostCount: 89100,
     likeCount: 1234567,
@@ -122,7 +122,7 @@ const posts: Post[] = [
     },
     content:
       "Testing the zero state of actions. This post should render clean circular buttons with zero layout shifting. Click them to see the transition from circular icons to oblong pills with numeric values!",
-    timestamp: "1m",
+    timestamp: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
     replyCount: 0,
     repostCount: 0,
     likeCount: 0,
@@ -142,7 +142,7 @@ const posts: Post[] = [
     },
     content:
       "Mixed state test: 12 replies and 1500 views, but currently 0 reposts and 0 likes. Like and Repost this post to test dynamic shape shifting!",
-    timestamp: "15m",
+    timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
     replyCount: 12,
     repostCount: 0,
     likeCount: 0,
