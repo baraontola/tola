@@ -10,5 +10,13 @@ export function PostList({ posts }: PostListProps) {
     return <p className="p-4 text-sm text-muted-foreground">No posts yet</p>
   }
 
-  return posts.map((post) => <PostCard key={post.id} post={post} />)
+  return (
+    <ol className="m-0 list-none p-0">
+      {posts.map((post) => (
+        <li key={post.id}>
+          <PostCard post={post} />
+        </li>
+      ))}
+    </ol>
+  )
 }

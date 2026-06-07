@@ -218,9 +218,7 @@ export function PostActions({
                   toast("Saved to Bookmarks", {
                     action: {
                       label: "See all",
-                      onClick: () => {
-                        console.log("Navigate to bookmarks")
-                      },
+                      onClick: () => {},
                     },
                   })
                 } else {
@@ -232,9 +230,7 @@ export function PostActions({
                         toast("Saved to Bookmarks", {
                           action: {
                             label: "See all",
-                            onClick: () => {
-                              console.log("Navigate to bookmarks")
-                            },
+                            onClick: () => {},
                           },
                         })
                       },

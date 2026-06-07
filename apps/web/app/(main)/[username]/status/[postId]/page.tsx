@@ -1,8 +1,13 @@
 import { notFound } from "next/navigation"
-import { getPostById, getRepliesByPostId } from "@/features/post/lib/posts"
+import {
+  getPostById,
+  getAncestors,
+  getRepliesByPostId,
+} from "@/features/post/lib/posts"
 import { PostCard } from "@/features/post/components/post-card"
 import { BackButton } from "@/features/post/components/back-button"
 import { ReplyComposer } from "@/features/post/components/reply-composer"
+import { ScrollToAnchor } from "@/features/post/components/scroll-to-anchor"
 
 interface PageProps {
   params: Promise<{
@@ -20,30 +25,55 @@ export default async function PostDetailPage({ params }: PageProps) {
     notFound()
   }
 
-  const replies = await getRepliesByPostId(postId)
+  const [ancestors, replies] = await Promise.all([
+    getAncestors(postId),
+    getRepliesByPostId(postId),
+  ])
 
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <div className="sticky top-0 z-10 flex items-center gap-2 border-b bg-background p-4">
+      <header
+        id="post-detail-header"
+        className="sticky top-0 z-10 flex items-center gap-2 border-b bg-background p-4"
+      >
         <BackButton />
         <h1 className="text-xl font-semibold">Post</h1>
-      </div>
+      </header>
 
       {/* Main Post, Reply Area, and Thread Replies */}
       <div className="flex flex-col">
-        <PostCard post={post} />
+        {ancestors.length > 0 && (
+          <section className="flex flex-col" aria-label="Thread ancestors">
+            {ancestors.map((ancestor) => (
+              <PostCard key={ancestor.id} post={ancestor} noBorder />
+            ))}
+          </section>
+        )}
+
+        <div id={`current-post-${postId}`}>
+          <PostCard post={post} disableNavigation noBorder />
+        </div>
+
+        {ancestors.length > 0 && (
+          <ScrollToAnchor
+            anchorId={`current-post-${postId}`}
+            headerId="post-detail-header"
+          />
+        )}
 
         {/* Separated Reply Composer Component */}
-        <ReplyComposer />
+        <ReplyComposer postId={postId} />
 
         {replies.length > 0 && (
-          <div className="flex flex-col">
+          <section className="flex flex-col" aria-label="Replies">
             {replies.map((reply) => (
               <PostCard key={reply.id} post={reply} />
             ))}
-          </div>
+          </section>
         )}
+
+        {ancestors.length > 0 && <div id="post-spacer" />}
       </div>
     </div>
   )

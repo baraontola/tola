@@ -391,6 +391,112 @@ export const mockPostsDb: Post[] = [
     viewCount: 40,
     shareCount: 0,
   },
+
+  // 10-level chain: Deep Root -> D1 -> D2 -> ... -> D9
+  ...[
+    {
+      id: "9",
+      depth: 0,
+      parentId: null as string | null,
+      name: "Deep Root",
+      username: "deep_root",
+      letter: "A",
+    },
+    {
+      id: "91",
+      depth: 1,
+      parentId: "9",
+      name: "Deep 1",
+      username: "deep_1",
+      letter: "B",
+    },
+    {
+      id: "92",
+      depth: 2,
+      parentId: "91",
+      name: "Deep 2",
+      username: "deep_2",
+      letter: "C",
+    },
+    {
+      id: "93",
+      depth: 3,
+      parentId: "92",
+      name: "Deep 3",
+      username: "deep_3",
+      letter: "D",
+    },
+    {
+      id: "94",
+      depth: 4,
+      parentId: "93",
+      name: "Deep 4",
+      username: "deep_4",
+      letter: "E",
+    },
+    {
+      id: "95",
+      depth: 5,
+      parentId: "94",
+      name: "Deep 5",
+      username: "deep_5",
+      letter: "F",
+    },
+    {
+      id: "96",
+      depth: 6,
+      parentId: "95",
+      name: "Deep 6",
+      username: "deep_6",
+      letter: "G",
+    },
+    {
+      id: "97",
+      depth: 7,
+      parentId: "96",
+      name: "Deep 7",
+      username: "deep_7",
+      letter: "H",
+    },
+    {
+      id: "98",
+      depth: 8,
+      parentId: "97",
+      name: "Deep 8",
+      username: "deep_8",
+      letter: "I",
+    },
+    {
+      id: "99",
+      depth: 9,
+      parentId: "98",
+      name: "Deep 9",
+      username: "deep_9",
+      letter: "J",
+    },
+  ].map(({ id, depth, parentId, name, username, letter }) => ({
+    id,
+    ...(parentId ? { parentId } : {}),
+    author: {
+      name,
+      username,
+      avatarSrc: "https://github.com/shadcn.png",
+      avatarAlt: `@${username}`,
+      avatarFallback: letter,
+      bio: `Post ${letter} — depth ${depth}${depth === 0 ? ", root" : `. Parent: ${String.fromCharCode(64 + depth)}`}.`,
+      followingCount: 100 - depth * 10,
+      followersCount: 500 - depth * 50,
+    },
+    content: `Ini adalah Post ${letter}.${depth === 0 ? " Saya root dari thread ini." : ` Saya membalas Post ${String.fromCharCode(64 + depth)}.`}`,
+    timestamp: new Date(
+      Date.now() - (60 - depth * 5) * 60 * 1000
+    ).toISOString(),
+    replyCount: depth < 9 ? 1 : 0,
+    repostCount: 0,
+    likeCount: 10 - depth,
+    viewCount: 200 - depth * 20,
+    shareCount: 0,
+  })),
 ]
 
 // Data Access Layer (mimicking production queries)
@@ -405,6 +511,27 @@ export async function getPostById(id: string): Promise<Post | null> {
   return post || null
 }
 
+export async function getAncestors(postId: string): Promise<Post[]> {
+  const ancestors: Post[] = []
+  let currentId: string | undefined = postId
+
+  while (currentId) {
+    const post = mockPostsDb.find((p) => p.id === currentId)
+    if (!post?.parentId) break
+    const parent = mockPostsDb.find((p) => p.id === post.parentId)
+    if (!parent) break
+    ancestors.unshift(parent)
+    currentId = parent.id
+  }
+
+  return ancestors
+}
+
 export async function getRepliesByPostId(postId: string): Promise<Post[]> {
-  return mockPostsDb.filter((post) => post.parentId === postId)
+  return mockPostsDb
+    .filter((post) => post.parentId === postId)
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import { useActionState } from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import { PostAvatar } from "./post-avatar"
 import {
@@ -10,6 +11,7 @@ import {
 import { UserHoverCard } from "../../user/components/user-hover-card"
 import Link from "next/link"
 import { Image, Smile, ListTodo, Calendar } from "lucide-react"
+import { submitReply } from "@/features/post/lib/actions"
 
 // Mock current user info for HoverCard
 const currentUser = {
@@ -23,9 +25,15 @@ const currentUser = {
   followersCount: 12400,
 }
 
-export function ReplyComposer() {
+export function ReplyComposer({ postId }: { postId: string }) {
+  const [, formAction, pending] = useActionState(submitReply, null)
+
   return (
-    <div className="flex items-start gap-2 border-b bg-background p-4">
+    <form
+      action={formAction}
+      className="flex items-start gap-2 border-b bg-background p-4"
+    >
+      <input type="hidden" name="parentId" value={postId} />
       {/* Current User Avatar with UserHoverCard and Profile Link */}
       <UserHoverCard user={currentUser}>
         <Link
@@ -48,6 +56,7 @@ export function ReplyComposer() {
             data-slot="input-group-control"
             className="flex field-sizing-content min-h-16 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
             placeholder="Post your reply..."
+            name="content"
           />
           <InputGroupAddon align="block-end">
             <div className="flex gap-1">
@@ -80,12 +89,18 @@ export function ReplyComposer() {
                 <Calendar />
               </InputGroupButton>
             </div>
-            <InputGroupButton className="ml-auto" size="sm" variant="default">
+            <InputGroupButton
+              className="ml-auto"
+              size="sm"
+              variant="default"
+              type="submit"
+              disabled={pending}
+            >
               Reply
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
       </div>
-    </div>
+    </form>
   )
 }

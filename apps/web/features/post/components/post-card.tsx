@@ -12,9 +12,15 @@ import Link from "next/link"
 
 interface PostCardProps {
   post: Post
+  disableNavigation?: boolean
+  noBorder?: boolean
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({
+  post,
+  disableNavigation = false,
+  noBorder = false,
+}: PostCardProps) {
   const router = useRouter()
   const clickStartRef = useRef({ x: 0, y: 0 })
 
@@ -23,6 +29,8 @@ export function PostCard({ post }: PostCardProps) {
   }
 
   const handleCardClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (disableNavigation) return
+
     // 1. Prevent navigation if the user is selecting text
     const selection = window.getSelection()
     if (selection && selection.toString().length > 0) {
@@ -59,7 +67,7 @@ export function PostCard({ post }: PostCardProps) {
       onClick={handleCardClick}
       onAuxClick={handleCardClick}
       onMouseDown={handleMouseDown}
-      className="group relative flex cursor-pointer items-start gap-2 border-b p-4 transition-colors hover:bg-accent/20"
+      className={`group relative flex items-start gap-2 p-4 transition-colors ${noBorder ? "" : "border-b"} ${disableNavigation ? "" : "cursor-pointer hover:bg-accent/20"}`}
     >
       <UserHoverCard user={post.author}>
         <Link
