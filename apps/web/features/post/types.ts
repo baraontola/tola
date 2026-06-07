@@ -10,4 +10,5 @@ export interface Post {
   likeCount: number
   viewCount: number
   shareCount: number
+  parentId?: string
 }
