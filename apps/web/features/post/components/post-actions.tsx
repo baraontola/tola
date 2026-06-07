@@ -183,7 +183,7 @@ export function PostActions({
                 navigator.clipboard
                   .writeText(postUrl)
                   .then(() => {
-                    toast.success("Link copied to clipboard")
+                    toast("Link copied to clipboard")
                   })
                   .catch((err) => {
                     toast.error("Failed to copy link")
@@ -214,9 +214,33 @@ export function PostActions({
             <DropdownMenuItem
               onClick={() => {
                 setIsSaved(!isSaved)
-                toast.success(
-                  isSaved ? "Removed from Bookmarks" : "Saved to Bookmarks"
-                )
+                if (!isSaved) {
+                  toast("Saved to Bookmarks", {
+                    action: {
+                      label: "See all",
+                      onClick: () => {
+                        console.log("Navigate to bookmarks")
+                      },
+                    },
+                  })
+                } else {
+                  toast("Removed from Bookmarks", {
+                    action: {
+                      label: "Undo",
+                      onClick: () => {
+                        setIsSaved(true)
+                        toast("Saved to Bookmarks", {
+                          action: {
+                            label: "See all",
+                            onClick: () => {
+                              console.log("Navigate to bookmarks")
+                            },
+                          },
+                        })
+                      },
+                    },
+                  })
+                }
               }}
             >
               {isSaved ? <BookmarkOff /> : <Bookmark />}
@@ -224,7 +248,14 @@ export function PostActions({
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
-                toast.success("Marked as not interested")
+                toast("Marked as not interested", {
+                  action: {
+                    label: "Undo",
+                    onClick: () => {
+                      toast("Feedback removed")
+                    },
+                  },
+                })
               }}
             >
               <EyeOff />
@@ -235,27 +266,27 @@ export function PostActions({
           <DropdownMenuGroup>
             <DropdownMenuItem
               onClick={() => {
-                toast.success(`Muted @${authorUsername}`, {
+                toast(`Muted @${authorUsername}`, {
                   action: {
                     label: "Undo",
                     onClick: () => {
-                      toast.success(`Unmuted @${authorUsername}`)
+                      toast(`Unmuted @${authorUsername}`)
                     },
                   },
                 })
               }}
             >
               <UserMinus />
-              Mute @{authorUsername}
+              Mute
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem>
               <Ban />
-              Block @{authorUsername}
+              Block
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem>
               <Flag />
               Report post
             </DropdownMenuItem>
